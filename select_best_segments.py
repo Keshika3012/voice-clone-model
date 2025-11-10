@@ -40,7 +40,7 @@ def analyze_segment(file_path):
         return None
 
 def main():
-    print("🎯 Selecting best audio segments for Chris voice cloning\n")
+    print("Selecting best audio segments for Chris voice cloning\n")
     
     processed_dir = Path("data/processed/chris")
     output_dir = Path("data/raw/chris_selected")

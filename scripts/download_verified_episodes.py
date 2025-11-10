@@ -61,23 +61,23 @@ class VerifiedEpisodeDownloader:
             "Generative models: exploration to deployment"
         }
         
-        logger.info(f"📋 Initialized with {len(self.verified_titles)} verified episode titles")
+        logger.info(f"Initialized with {len(self.verified_titles)} verified episode titles")
     
     def fetch_feed(self) -> str:
         """Fetch RSS feed content"""
-        logger.info(f"📡 Fetching RSS feed: {self.feed_url}")
+        logger.info(f"Fetching RSS feed: {self.feed_url}")
         
         try:
             response = requests.get(self.feed_url, timeout=30)
             response.raise_for_status()
             return response.text
         except Exception as e:
-            logger.error(f"❌ Failed to fetch feed: {e}")
+            logger.error(f" Failed to fetch feed: {e}")
             raise
     
     def parse_feed(self, feed_content: str) -> Dict:
         """Parse RSS feed XML and extract episodes"""
-        logger.info("📝 Parsing RSS feed")
+        logger.info("Parsing RSS feed")
         
         try:
             root = ET.fromstring(feed_content)
@@ -92,14 +92,14 @@ class VerifiedEpisodeDownloader:
                 if episode:
                     episodes.append(episode)
             
-            logger.info(f"📊 Found {len(episodes)} total episodes in feed")
+            logger.info(f"Found {len(episodes)} total episodes in feed")
             return {
                 'title': self._get_text(channel, 'title'),
                 'episodes': episodes
             }
             
         except ET.ParseError as e:
-            logger.error(f"❌ Failed to parse XML: {e}")
+            logger.error(f"Failed to parse XML: {e}")
             raise
     
     def _get_text(self, element, tag: str) -> str:
@@ -150,17 +150,17 @@ class VerifiedEpisodeDownloader:
                 if normalized_title == normalized_verified or title == verified_title:
                     verified_episodes.append(episode)
                     found_titles.add(verified_title)
-                    logger.info(f"✅ Found: {title}")
+                    logger.info(f"Found: {title}")
                     break
         
         # Report missing episodes
         missing_titles = self.verified_titles - found_titles
         if missing_titles:
-            logger.warning(f"⚠️  Could not find {len(missing_titles)} episodes:")
+            logger.warning(f"Could not find {len(missing_titles)} episodes:")
             for title in sorted(missing_titles):
                 logger.warning(f"   • {title}")
         
-        logger.info(f"🎯 Found {len(verified_episodes)}/{len(self.verified_titles)} verified episodes")
+        logger.info(f"Found {len(verified_episodes)}/{len(self.verified_titles)} verified episodes")
         return verified_episodes
     
     def _normalize_title(self, title: str) -> str:
@@ -175,7 +175,7 @@ class VerifiedEpisodeDownloader:
         if max_episodes:
             episodes = episodes[:max_episodes]
         
-        logger.info(f"⬇️  Downloading {len(episodes)} verified episodes")
+        logger.info(f"Downloading {len(episodes)} verified episodes")
         
         downloaded_files = []
         
@@ -190,10 +190,10 @@ class VerifiedEpisodeDownloader:
                         'file_path': file_path
                     })
             except Exception as e:
-                logger.error(f"❌ Failed to download {episode['title']}: {e}")
+                logger.error(f"Failed to download {episode['title']}: {e}")
                 continue
         
-        logger.info(f"✅ Successfully downloaded {len(downloaded_files)} episodes")
+        logger.info(f"Successfully downloaded {len(downloaded_files)} episodes")
         return downloaded_files
     
     def _download_episode_audio(self, episode: Dict) -> str:
@@ -232,7 +232,7 @@ class VerifiedEpisodeDownloader:
             return str(file_path)
             
         except Exception as e:
-            logger.error(f"❌ Download failed: {e}")
+            logger.error(f"Download failed: {e}")
             if file_path.exists():
                 file_path.unlink()
             return None
@@ -244,11 +244,11 @@ class VerifiedEpisodeDownloader:
         with open(metadata_file, 'w') as f:
             json.dump(episodes, f, indent=2, default=str)
         
-        logger.info(f"💾 Saved metadata: {metadata_file}")
+        logger.info(f"Saved metadata: {metadata_file}")
     
     def download_verified_episodes(self, max_episodes: int = None) -> Dict:
         """Main method to download all verified host-only episodes"""
-        logger.info("🚀 Starting verified episode download")
+        logger.info("Starting verified episode download")
         
         # Fetch and parse feed
         feed_content = self.fetch_feed()
@@ -286,7 +286,7 @@ def main():
         results = downloader.download_verified_episodes()
         
         print("\n" + "="*70)
-        print("📊 VERIFIED EPISODE DOWNLOAD SUMMARY")
+        print("VERIFIED EPISODE DOWNLOAD SUMMARY")
         print("="*70)
         print(f"Podcast: {results['podcast_info']['title']}")
         print(f"Total Episodes in Feed: {results['podcast_info']['total_episodes_in_feed']}")
@@ -297,7 +297,7 @@ def main():
         success_rate = len(results['downloaded_files']) / results['podcast_info']['verified_episodes_target'] * 100
         print(f"Download Success Rate: {success_rate:.1f}%")
         
-        print("\n✅ Download complete!")
+        print("\nDownload complete!")
         
         if results['downloaded_files']:
             print("\n📂 Downloaded Episodes (first 10):")
@@ -307,11 +307,11 @@ def main():
                 print(f"• {episode_title}")
                 print(f"  File: {Path(item['file_path']).name} ({file_size:.1f} MB)")
         
-        print(f"\n🎯 These episodes contain only Chris Benson and Daniel Whitenack!")
+        print(f"\nThese episodes contain only Chris Benson and Daniel Whitenack!")
         print("Perfect for voice cloning training data.")
         
     except Exception as e:
-        logger.error(f"❌ Download failed: {e}")
+        logger.error(f"Download failed: {e}")
         return 1
     
     return 0

@@ -57,9 +57,9 @@ class VoiceCloningDemo:
                     speaker_id,
                     output_path
                 )
-                print(f"✅ Generated: {generated_file}")
+                print(f"Generated: {generated_file}")
             except Exception as e:
-                print(f"❌ Error: {e}")
+                print(f"Error: {e}")
     
     def run_speed_demo(self):
         """Demonstrate speech speed control"""
@@ -67,16 +67,16 @@ class VoiceCloningDemo:
         print("-" * 30)
         
         if not self.cloner.voice_profiles:
-            print("❌ No voice profiles available")
+            print("No voice profiles available")
             return
         
         speaker_id = list(self.cloner.voice_profiles.keys())[0]
         speeds = [0.8, 1.0, 1.2, 1.5]
         
-        print(f"🎭 Using speaker: {speaker_id}")
+        print(f"Using speaker: {speaker_id}")
         
         for speed in speeds:
-            print(f"🎚️ Generating at {speed}x speed...")
+            print(f"Generating at {speed}x speed...")
             
             config = GenerationConfig(speed=speed)
             output_path = f"outputs/demos/{speaker_id}_speed_{speed}x.wav"
@@ -88,17 +88,17 @@ class VoiceCloningDemo:
                     output_path,
                     config
                 )
-                print(f"✅ Generated: {generated_file}")
+                print(f"Generated: {generated_file}")
             except Exception as e:
-                print(f"❌ Error: {e}")
+                print(f"Error: {e}")
     
     def run_comparison_demo(self):
         """Demonstrate speaker comparison"""
-        print("\n🆚 SPEAKER COMPARISON")
+        print("\nSPEAKER COMPARISON")
         print("-" * 30)
         
         if len(self.cloner.voice_profiles) < 2:
-            print("❌ Need at least 2 speakers for comparison")
+            print("Need at least 2 speakers for comparison")
             return
         
         text = self.demo_texts['technical']
@@ -106,19 +106,19 @@ class VoiceCloningDemo:
         
         try:
             results = self.cloner.compare_speakers(text)
-            print(f"✅ Generated comparison with {len(results)} speakers:")
+            print(f"Generated comparison with {len(results)} speakers:")
             for speaker_id, file_path in results.items():
                 print(f"  • {speaker_id}: {file_path}")
         except Exception as e:
-            print(f"❌ Error: {e}")
+            print(f"Error: {e}")
     
     def run_batch_demo(self):
         """Demonstrate batch generation"""
-        print("\n📦 BATCH GENERATION")
+        print("\nBATCH GENERATION")
         print("-" * 30)
         
         if not self.cloner.voice_profiles:
-            print("❌ No voice profiles available")
+            print("No voice profiles available")
             return
         
         speaker_id = list(self.cloner.voice_profiles.keys())[0]
@@ -130,7 +130,7 @@ class VoiceCloningDemo:
             "Finally, this fourth sample completes our batch demo."
         ]
         
-        print(f"🎭 Generating batch for: {speaker_id}")
+        print(f"Generating batch for: {speaker_id}")
         
         try:
             generated_files = self.cloner.batch_generate(
@@ -138,22 +138,22 @@ class VoiceCloningDemo:
                 speaker_id,
                 "outputs/demos/batch_demo"
             )
-            print(f"✅ Generated {len(generated_files)} batch files")
+            print(f"Generated {len(generated_files)} batch files")
         except Exception as e:
-            print(f"❌ Error: {e}")
+            print(f"Error: {e}")
     
     def run_analysis_demo(self):
         """Demonstrate voice analysis"""
-        print("\n🔬 VOICE ANALYSIS")
+        print("\nVOICE ANALYSIS")
         print("-" * 30)
         
         for speaker_id in self.cloner.voice_profiles.keys():
-            print(f"\n🎭 Analyzing: {speaker_id.upper()}")
+            print(f"\nAnalyzing: {speaker_id.upper()}")
             
             try:
                 analysis = self.cloner.analyze_voice(speaker_id)
                 
-                print(f"📊 Voice Characteristics:")
+                print(f"Voice Characteristics:")
                 print(f"  • Duration: {analysis['duration']:.2f} seconds")
                 print(f"  • Pitch (F0): {analysis['f0_mean']:.1f} ± {analysis['f0_std']:.1f} Hz")
                 print(f"  • Spectral Centroid: {analysis['spectral_centroid']:.0f} Hz")
@@ -170,15 +170,15 @@ class VoiceCloningDemo:
                 print(f"  • Voice Type: {voice_type}")
                 
             except Exception as e:
-                print(f"❌ Analysis failed: {e}")
+                print(f"Analysis failed: {e}")
     
     def run_interactive_demo(self):
         """Interactive demo where user can input custom text"""
-        print("\n💬 INTERACTIVE DEMO")
+        print("\nINTERACTIVE DEMO")
         print("-" * 30)
         
         if not self.cloner.voice_profiles:
-            print("❌ No voice profiles available")
+            print("No voice profiles available")
             return
         
         # Show available speakers
@@ -209,21 +209,21 @@ class VoiceCloningDemo:
                         output_path
                     )
                     
-                    print(f"✅ Generated: {generated_file}")
-                    print("🎵 You can now play the audio file!")
+                    print(f"Generated: {generated_file}")
+                    print("You can now play the audio file!")
                 else:
-                    print("❌ No text provided")
+                    print("No text provided")
             else:
-                print("❌ Invalid selection")
+                print("Invalid selection")
                 
         except (ValueError, KeyboardInterrupt):
-            print("\n👋 Demo cancelled")
+            print("\nDemo cancelled")
         except Exception as e:
-            print(f"❌ Error: {e}")
+            print(f"Error: {e}")
     
     def run_full_demo(self):
         """Run complete demonstration"""
-        print("🚀 Running full voice cloning demonstration...\n")
+        print("Running full voice cloning demonstration...\n")
         
         try:
             self.run_basic_demo()
@@ -237,17 +237,17 @@ class VoiceCloningDemo:
                 self.run_comparison_demo()
             
             print("\n" + "=" * 50)
-            print("✅ DEMO COMPLETE!")
+            print("DEMO COMPLETE!")
             print("=" * 50)
-            print("📂 Check the outputs/demos/ directory for generated files")
+            print("Check the outputs/demos/ directory for generated files")
             
         except Exception as e:
-            print(f"❌ Demo failed: {e}")
+            print(f"Demo failed: {e}")
 
 
 def show_menu():
     """Show demo menu"""
-    print("\n🎭 Voice Cloning Demo Menu")
+    print("\nVoice Cloning Demo Menu")
     print("=" * 30)
     print("1. Basic Demo - Generate simple samples")
     print("2. Speed Demo - Test different speech speeds")
@@ -285,18 +285,18 @@ def main():
             elif choice == '7':
                 demo.run_full_demo()
             elif choice == '8':
-                print("👋 Goodbye!")
+                print("Goodbye!")
                 break
             else:
-                print("❌ Invalid choice. Please select 1-8.")
+                print("Invalid choice. Please select 1-8.")
                 
             input("\nPress Enter to continue...")
             
         except KeyboardInterrupt:
-            print("\n\n👋 Goodbye!")
+            print("\n\nGoodbye!")
             break
         except Exception as e:
-            print(f"❌ Error: {e}")
+            print(f"Error: {e}")
             input("\nPress Enter to continue...")
 
 

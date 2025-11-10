@@ -1,0 +1,53 @@
+# Voice Cloning Project Dependencies
+
+# Core TTS and Voice Cloning
+TTS>=0.15.0
+torch>=1.9.0
+torchaudio>=0.9.0
+transformers>=4.20.0
+
+# Audio Processing
+librosa>=0.9.0
+soundfile>=0.10.3
+pydub>=0.25.0
+scipy>=1.7.0
+numpy>=1.21.0
+
+# Machine Learning & Deep Learning
+scikit-learn>=1.0.0
+matplotlib>=3.5.0
+seaborn>=0.11.0
+
+# Data Handling
+pandas>=1.3.0
+PyYAML>=6.0
+
+# Web Interface (optional)
+gradio>=3.0.0
+streamlit>=1.0.0
+
+# Utilities
+tqdm>=4.62.0
+click>=8.0.0
+colorlog>=6.0.0
+requests>=2.25.0
+
+# Development Tools
+pytest>=6.2.0
+black>=21.0.0
+flake8>=3.9.0
+
+# Audio Format Support
+ffmpeg-python>=0.2.0
+
+# Speaker Diarization & Voice Separation
+pyannote.audio>=2.1.0
+onnxruntime>=1.12.0
+webrtcvad>=2.0.10
+speechbrain>=0.5.0
+
+# Evaluation Metrics
+pesq>=0.0.3
+pystoi>=0.3.3
+mir-eval>=0.7
+museval>=0.4.0

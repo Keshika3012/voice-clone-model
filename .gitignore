@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb_checkpoints
+
+# Data and model files (often too large for git)
+data/
+outputs/
+final_training_data/
+pretrained_ecapa/
+pretrained_sepformer/
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/

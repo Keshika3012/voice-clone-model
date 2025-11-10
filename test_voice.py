@@ -43,7 +43,7 @@ try:
         print(f"Generated audio: {result}")
         print("\nVoice cloning test successful!")
     else:
-        print("\n⚠️  Chris voice profile not found")
+        print("\nChris voice profile not found")
         print("Available profiles:", list(cloner.voice_profiles.keys()))
         
 except Exception as e:

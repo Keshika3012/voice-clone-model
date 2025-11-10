@@ -50,12 +50,12 @@ class PodcastExtractor:
             response.raise_for_status()
             return response.text
         except Exception as e:
-            logger.error(f"❌ Failed to fetch feed: {e}")
+            logger.error(f"Failed to fetch feed: {e}")
             raise
     
     def parse_feed(self, feed_content: str) -> dict:
         """Parse RSS feed XML"""
-        logger.info("📝 Parsing RSS feed")
+        logger.info("Parsing RSS feed")
         
         try:
             root = ET.fromstring(feed_content)
@@ -79,11 +79,11 @@ class PodcastExtractor:
                 if episode:
                     podcast_info['episodes'].append(episode)
             
-            logger.info(f"📊 Found {len(podcast_info['episodes'])} episodes")
+            logger.info(f"Found {len(podcast_info['episodes'])} episodes")
             return podcast_info
             
         except ET.ParseError as e:
-            logger.error(f"❌ Failed to parse XML: {e}")
+            logger.error(f"Failed to parse XML: {e}")
             raise
     
     def _get_text(self, element, tag: str) -> str:
@@ -124,11 +124,11 @@ class PodcastExtractor:
         for episode in episodes:
             if self._is_host_only_episode(episode):
                 host_only_episodes.append(episode)
-                logger.info(f"✅ Host-only episode: {episode['title']}")
+                logger.info(f"Host-only episode: {episode['title']}")
             else:
-                logger.debug(f"❌ Has guests: {episode['title']}")
+                logger.debug(f"Has guests: {episode['title']}")
         
-        logger.info(f"🎯 Found {len(host_only_episodes)} host-only episodes")
+        logger.info(f"Found {len(host_only_episodes)} host-only episodes")
         return host_only_episodes
     
     def _is_host_only_episode(self, episode: dict) -> bool:
@@ -176,7 +176,7 @@ class PodcastExtractor:
         if max_episodes:
             episodes = episodes[:max_episodes]
         
-        logger.info(f"⬇️ Downloading {len(episodes)} episodes")
+        logger.info(f"Downloading {len(episodes)} episodes")
         
         downloaded_files = []
         
@@ -191,10 +191,10 @@ class PodcastExtractor:
                         'file_path': file_path
                     })
             except Exception as e:
-                logger.error(f"❌ Failed to download {episode['title']}: {e}")
+                logger.error(f"Failed to download {episode['title']}: {e}")
                 continue
         
-        logger.info(f"✅ Downloaded {len(downloaded_files)} episodes")
+        logger.info(f"Downloaded {len(downloaded_files)} episodes")
         return downloaded_files
     
     def _download_episode_audio(self, episode: dict) -> str:
@@ -233,7 +233,7 @@ class PodcastExtractor:
             return str(file_path)
             
         except Exception as e:
-            logger.error(f"❌ Download failed: {e}")
+            logger.error(f"Download failed: {e}")
             if file_path.exists():
                 file_path.unlink()  # Remove partial file
             return None
@@ -245,11 +245,11 @@ class PodcastExtractor:
         with open(metadata_file, 'w') as f:
             json.dump(episodes, f, indent=2, default=str)
         
-        logger.info(f"💾 Saved metadata: {metadata_file}")
+        logger.info(f"Saved metadata: {metadata_file}")
     
     def extract_host_only_episodes(self, max_episodes: int = 20) -> dict:
         """Main method to extract host-only episodes"""
-        logger.info("🚀 Starting host-only episode extraction")
+        logger.info("Starting host-only episode extraction")
         
         # Fetch and parse feed
         feed_content = self.fetch_feed()
@@ -285,22 +285,22 @@ def main():
         results = extractor.extract_host_only_episodes(max_episodes=10)  # Start with 10 episodes
         
         print("\n" + "="*60)
-        print("📊 EXTRACTION SUMMARY")
+        print("EXTRACTION SUMMARY")
         print("="*60)
         print(f"Podcast: {results['podcast_info']['title']}")
         print(f"Total Episodes: {results['podcast_info']['total_episodes']}")
         print(f"Host-Only Episodes Found: {results['podcast_info']['host_only_episodes']}")
         print(f"Downloaded: {len(results['downloaded_files'])}")
-        print("\n✅ Extraction complete!")
+        print("\nExtraction complete!")
         
         if results['downloaded_files']:
-            print("\n📂 Downloaded Episodes:")
+            print("\nDownloaded Episodes:")
             for item in results['downloaded_files'][:5]:  # Show first 5
                 print(f"• {item['episode']['title']}")
                 print(f"  File: {item['file_path']}")
         
     except Exception as e:
-        logger.error(f"❌ Extraction failed: {e}")
+        logger.error(f"Extraction failed: {e}")
         return 1
     
     return 0

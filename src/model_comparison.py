@@ -214,7 +214,7 @@ class ModelComparison:
             metrics['spectral_centroid_similarity'] = float(sc_similarity)
 
         except Exception as e:
-            print(f"⚠️ Error calculating metrics: {e}")
+            print(f"Error calculating metrics: {e}")
             metrics = {
                 'pesq': 0.0,
                 'stoi': 0.0,
